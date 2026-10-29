@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kyle Dauk | Computer Science ePortfolio</title>
+  <meta name="description" content="CS 499 Capstone ePortfolio of Kyle Dauk: software design and engineering, algorithms and data structures, and databases.">
+  <style>
+    :root {
+      --bg: #ffffff; --surface: #f4f8f7; --text: #1b1f23; --muted: #57606a;
+      --accent: #00796b; --accent-dark: #005a4f; --border: #d0d7de;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+           background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent-dark); }
+    a:focus-visible, button:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+    .skip { position: absolute; left: -999px; top: 0; background: #fff; padding: 8px 12px; }
+    .skip:focus { left: 8px; }
+    header { background: var(--accent); color: #fff; }
+    nav { max-width: 1040px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center;
+          gap: 4px 20px; padding: 14px 20px; }
+    nav .brand { font-weight: 700; font-size: 1.1rem; margin-right: auto; color: #fff; text-decoration: none; }
+    nav a { color: #e6f4f1; text-decoration: none; font-size: .95rem; }
+    nav a:hover { color: #fff; text-decoration: underline; }
+    .hero { max-width: 1040px; margin: 0 auto; padding: 56px 20px 40px; }
+    .hero h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 0 0 8px; line-height: 1.2; }
+    .hero p.lead { font-size: 1.15rem; color: var(--muted); max-width: 720px; margin: 0 0 20px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+    .tags li { background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+               padding: 4px 12px; font-size: .88rem; }
+    main { max-width: 1040px; margin: 0 auto; padding: 0 20px 48px; }
+    h2 { font-size: 1.45rem; margin: 40px 0 12px; border-bottom: 2px solid var(--surface); padding-bottom: 6px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--border); border-radius: 10px; padding: 18px; background: #fff; }
+    .card h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .card p { margin: 0 0 10px; color: var(--muted); font-size: .95rem; }
+    .status { display: inline-block; font-size: .78rem; font-weight: 600; color: var(--accent-dark);
+              background: var(--surface); border-radius: 4px; padding: 2px 8px; }
+    footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .88rem; }
+    footer div { max-width: 1040px; margin: 0 auto; padding: 18px 20px; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to main content</a>
+  <header>
+    <nav aria-label="Primary">
+      <a class="brand" href="./">Kyle Dauk</a>
+      <a href="#self-assessment">Self-Assessment</a>
+      <a href="#code-review">Code Review</a>
+      <a href="#enhancements">Enhancements</a>
+      <a href="https://github.com/KyleDauk">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="title">
+    <h1 id="title">Computer Science ePortfolio</h1>
+    <p class="lead">Capstone portfolio for the Bachelor of Science in Computer Science at Southern New Hampshire University (CS 499). It presents original and enhanced versions of an Android weight-tracking application across software design and engineering, algorithms and data structures, and databases.</p>
+    <ul class="tags" aria-label="Focus areas">
+      <li>Android / Java</li><li>Full-stack development</li><li>Secure coding</li>
+      <li>SQL and Room</li><li>Algorithms and data structures</li>
+    </ul>
+  </section>
+
+  <main id="content">
+    <h2 id="self-assessment">Professional Self-Assessment</h2>
+    <p>An introduction to my skills in collaboration, stakeholder communication, data structures and algorithms, software engineering, databases, and security. <span class="status">Coming in Module Seven</span></p>
+
+    <h2 id="code-review">Code Review</h2>
+    <p>A recorded walkthrough of the original CS 360 application: existing functionality, code analysis, and planned enhancements. <span class="status">Coming in Module Two</span></p>
+
+    <h2 id="enhancements">Artifact Enhancements</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Enhancement One: Software Design and Engineering</h3>
+        <p>Re-architecting the app to MVVM with a Repository layer, salted PBKDF2 authentication, and automated tests.</p>
+        <span class="status">Planned</span>
+      </article>
+      <article class="card">
+        <h3>Enhancement Two: Algorithms and Data Structures</h3>
+        <p>A trend analytics engine using a balanced search tree, sliding-window averages, and regression-based goal projection.</p>
+        <span class="status">Planned</span>
+      </article>
+      <article class="card">
+        <h3>Enhancement Three: Databases</h3>
+        <p>Migrating SQLite to Room with versioned migrations, indexing, encryption at rest, and SQL reporting.</p>
+        <span class="status">Planned</span>
+      </article>
+    </div>
+    <p><a href="https://github.com/KyleDauk/weight-tracking-android-app">View the original artifact repository</a></p>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 Kyle Dauk &middot; CS 499 Computer Science Capstone, Southern New Hampshire University</div>
+  </footer>
+</body>
+</html>
