@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Code Review | Kyle Dauk ePortfolio</title>
+  <meta name="description" content="Recorded code review of the CS 360 Weight Tracking Android app across software design and engineering, algorithms and data structures, and databases.">
+  <style>
+    :root {
+      --bg: #ffffff; --surface: #f4f8f7; --text: #1b1f23; --muted: #57606a;
+      --accent: #00796b; --accent-dark: #005a4f; --border: #d0d7de;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+           background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent-dark); }
+    a:focus-visible, summary:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+    .skip { position: absolute; left: -999px; top: 0; background: #fff; padding: 8px 12px; }
+    .skip:focus { left: 8px; }
+    header { background: var(--accent); color: #fff; }
+    nav { max-width: 1040px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center;
+          gap: 4px 20px; padding: 14px 20px; }
+    nav .brand { font-weight: 700; font-size: 1.1rem; margin-right: auto; color: #fff; text-decoration: none; }
+    nav a { color: #e6f4f1; text-decoration: none; font-size: .95rem; }
+    nav a:hover { color: #fff; text-decoration: underline; }
+    main { max-width: 1040px; margin: 0 auto; padding: 40px 20px 48px; }
+    h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0 0 8px; line-height: 1.2; }
+    .lead { font-size: 1.1rem; color: var(--muted); max-width: 760px; margin: 0 0 24px; }
+    h2 { font-size: 1.35rem; margin: 36px 0 12px; border-bottom: 2px solid var(--surface); padding-bottom: 6px; }
+    .video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden; }
+    .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .meta { color: var(--muted); font-size: .92rem; margin: 10px 0 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; background: #fff; }
+    .card h3 { margin: 0 0 6px; font-size: 1.02rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .94rem; }
+    ol.chapters { padding-left: 0; list-style: none; columns: 2 320px; column-gap: 28px; margin: 0; }
+    ol.chapters li { margin: 0 0 6px; break-inside: avoid; }
+    .ts { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--accent-dark); }
+    details { border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; background: var(--surface); }
+    summary { cursor: pointer; font-weight: 600; }
+    details h3 { margin: 22px 0 4px; font-size: 1.1rem; }
+    details h4 { margin: 14px 0 4px; font-size: .98rem; color: var(--muted); }
+    details p { margin: 0 0 10px; max-width: 820px; }
+    footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .88rem; }
+    footer div { max-width: 1040px; margin: 0 auto; padding: 18px 20px; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to main content</a>
+  <header>
+    <nav aria-label="Primary">
+      <a class="brand" href="./">Kyle Dauk</a>
+      <a href="./#self-assessment">Self-Assessment</a>
+      <a href="code-review.html" aria-current="page">Code Review</a>
+      <a href="./#enhancements">Enhancements</a>
+      <a href="https://github.com/KyleDauk">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="content">
+    <h1>Code Review: Weight Tracking Android App</h1>
+    <p class="lead">A recorded walkthrough, for peers and a manager, of the Android weight-tracking app I built in CS 360: Mobile Architecture and Programming. For each of the three enhancement categories, it shows what the code does today, analyzes it with the CS 499 code review checklist, and explains the enhancements I planned and the course outcomes they support.</p>
+
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/jCGXapk44Kg" title="Code review video: Weight Tracking Android app"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <p class="meta">Length 32:52 &middot; Closed captions available &middot; <a href="https://www.youtube.com/watch?v=jCGXapk44Kg" target="_blank" rel="noopener">Watch on YouTube</a> &middot; <a href="#transcript">Read the transcript</a></p>
+
+    <h2>How the review is organized</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>1. Existing functionality</h3>
+        <p>The running app on the emulator alongside the source code, showing what each part does before any enhancement.</p>
+      </article>
+      <article class="card">
+        <h3>2. Code analysis</h3>
+        <p>Structure, documentation, variables, arithmetic, loops and branches, and defensive programming, with the line numbers of each finding.</p>
+      </article>
+      <article class="card">
+        <h3>3. Planned enhancements</h3>
+        <p>The fix for each finding, the skills it demonstrates, and how it aligns with the five course outcomes.</p>
+      </article>
+    </div>
+
+    <h2>Chapters</h2>
+    <ol class="chapters">
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=0s" target="_blank" rel="noopener"><span class="ts">0:00</span> Introduction and the app at a glance</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=79s" target="_blank" rel="noopener"><span class="ts">1:19</span> Software design and engineering: existing functionality</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=438s" target="_blank" rel="noopener"><span class="ts">7:18</span> Software design and engineering: code analysis</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=761s" target="_blank" rel="noopener"><span class="ts">12:41</span> Software design and engineering: planned enhancements</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=922s" target="_blank" rel="noopener"><span class="ts">15:22</span> Software design and engineering: additional findings</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1018s" target="_blank" rel="noopener"><span class="ts">16:58</span> Algorithms and data structures: existing functionality</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1136s" target="_blank" rel="noopener"><span class="ts">18:56</span> Algorithms and data structures: code analysis</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1342s" target="_blank" rel="noopener"><span class="ts">22:22</span> Algorithms and data structures: planned enhancements</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1525s" target="_blank" rel="noopener"><span class="ts">25:25</span> Databases: existing functionality</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1619s" target="_blank" rel="noopener"><span class="ts">26:59</span> Databases: code analysis</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1784s" target="_blank" rel="noopener"><span class="ts">29:44</span> Databases: planned enhancements</a></li>
+          <li><a href="https://www.youtube.com/watch?v=jCGXapk44Kg&amp;t=1929s" target="_blank" rel="noopener"><span class="ts">32:09</span> Closing</a></li>
+    </ol>
+
+    <h2 id="transcript">Transcript</h2>
+    <details>
+      <summary>Read the full transcript</summary>
+        <h3>Opening</h3>
+        <p><span class="ts">[0:01]</span> Hi, my name is Kyle Dauk, and this is my Milestone One code review for CS 499, Computer Science Capstone, at Southern New Hampshire University. I&#x27;ll be reviewing one artifact across three categories: the Weight Tracking Android app I built in CS 360, Mobile Architecture and Programming, during the June to August 2026 term. It&#x27;s written in Java, it stores data in SQLite, and it&#x27;s about 2,300 lines across 15 classes.</p>
+        <p><span class="ts">[0:33]</span> Okay, so you can see here, I&#x27;ll show you the login screen, the Weight Tracking login screen, right there.</p>
+        <p><span class="ts">[0:47]</span> This review is going to follow three parts for each category. First, what the code does today. Second, an analysis using the CS 499 Code Review Checklist: structure, documentation, variables, arithmetic, loops and branches, and defensive programming. Third, the enhancements I&#x27;ll make and the course outcomes they support. I&#x27;ll start with software design and engineering, then algorithms and data structures, and then databases.</p>
+        <h3>Category One: Software Design and Engineering</h3>
+        <h4>Existing functionality</h4>
+        <p><span class="ts">[1:19]</span> So, Category One, software design and engineering. We&#x27;re going to show the existing functionality. So let me show you the emulator. Logging into my account here.</p>
+        <p><span class="ts">[1:37]</span> So anybody can see here, this app is a focused weight tracker. A user creates an account or logs in on this screen right here, and then you put in a password. It has to be at least eight characters. Then it&#x27;ll show a weight grid screen and a goal card, and we&#x27;ll get to all that. Let me log in. In this case I&#x27;m just doing John Doe. Going to be original here. Log in.</p>
+        <p><span class="ts">[2:16]</span> Okay, so in the app here, you can see the latest recorded weight is 219 pounds, 14 pounds to go, but our weight goal is 205. So that was 219 on October 10th, but then on November 5th, we show 205.6. So let&#x27;s take a look around here.</p>
+        <p><span class="ts">[2:48]</span> So I&#x27;m going to tap the plus button on the side here, and I&#x27;ll show you the screen with the date picker. So we could add a weight in right here. So let&#x27;s say 207, on November 6th, and then I can minimize this if I choose to, and I can save the weight. So the weight is saved right there. And then we&#x27;ll go and we will delete it. So it shows entry deleted.</p>
+        <p><span class="ts">[3:17]</span> I can also go into any of these weights here, and I can make an adjustment if I choose to, say 0.1. But for now, we&#x27;re going to leave it all the same, and I can delete like before. So I&#x27;ll leave this as it is.</p>
+        <p><span class="ts">[3:40]</span> I want to show you the toolbar menu right here. So under Goal Weight, I can adjust my goal weight. So 206, I could save the goal. In this case, we&#x27;re just going to leave it as is.</p>
+        <p><span class="ts">[4:01]</span> We can go to Measurements and BMI. If I go right here, I can change these. I can&#x27;t change that range unless I change the inches here. So let&#x27;s say I got shorter, 69 inches. Waist, put the waist at 36, and let&#x27;s do hips at 34. That&#x27;s today&#x27;s date. And there&#x27;s my BMI. Pretty high. I&#x27;m in the obesity range. Makes sense.</p>
+        <p><span class="ts">[4:49]</span> I&#x27;m going to go back. I can go to my profile here, and I can set a name, so in this case, John Doe. For sex, we&#x27;re going to go with male. Date of birth, 1996. Looks good to me. [inaudible] So in this case here, let&#x27;s go with lose weight as our desired outcome, and then I can save the profile.</p>
+        <p><span class="ts">[5:23]</span> Then text notifications. So you can allow text message updates, and you put in a phone number here for alerts. I&#x27;m not going to do any of that. There&#x27;s no need to. We&#x27;re not going to actually use that service, because it&#x27;s not even tied to a telecom company. Okay, so you&#x27;ve kind of seen that.</p>
+        <p><span class="ts">[5:52]</span> Let&#x27;s go over to LoginActivity, which I&#x27;m already on, and I&#x27;m going to go down to line 78. Okay, I&#x27;m at line 78, attemptLogIn. In the code, LoginActivity checks that both fields are filled in. Then it calls validateUser on line 87, if you look at 87 right here. And if it returns a user ID, line 126 passes that ID to the next screen as an Intent extra. That&#x27;s line 126.</p>
+        <p><span class="ts">[6:44]</span> Let&#x27;s look at WeightGridActivity.java. So I can go right here, and we&#x27;re going to go to line 50. Every other screen reads that ID back out, like here on line 51, and creates its own DatabaseHelper on line 50. So each Activity talks to the database directly, as you can see.</p>
+        <h4>Code analysis</h4>
+        <p><span class="ts">[7:18]</span> Okay, now the review. I&#x27;m using the CS 499 checklist. First, what&#x27;s good. The names are clear, the comments explain why the code does the things it does, and every database query uses question-mark parameters, which blocks SQL injection.</p>
+        <p><span class="ts">[7:36]</span> I brought us over here to AddWeightActivity, and we&#x27;ve got line 115 to show an issue. Okay, so lines 115 and 188, problem one: the screen does too much. It checks the input, saves it, checks the goal, and sends a text message. That&#x27;s four jobs in one place, and I&#x27;ll show you line 188. It&#x27;s the same thing right here. It also means none of this can be tested on its own.</p>
+        <p><span class="ts">[8:12]</span> We go to line 229 in this tab. See right here, the SimpleDateFormat. Problem two: this is the repeated code. The date format is typed out four times in three files, so it should be one shared constant.</p>
+        <p><span class="ts">[8:37]</span> And if I go over to the WeightGridActivity tab, right here, and I go to line 110, I&#x27;m actually pretty close to it. What we found right here is our third problem. All the database work runs on the main thread, and the screen reloads everything, every time it reopens. With years of data, the app could freeze.</p>
+        <p><span class="ts">[9:12]</span> And if I go to the DatabaseHelper tab, which is over here, and we go to line 188, you&#x27;re going to see right here the private String hash(String password). So the problem with this one is, this is the fourth problem, and it&#x27;s the biggest one in my opinion: passwords. They should be hashed with a plain SHA-256 and no salt. SHA-256 is built to be fast, so an attacker could try billions of guesses a second.</p>
+        <p><span class="ts">[9:45]</span> And we&#x27;ll drop down to line 172. We can go up to it, right here. So the if storedHash.equals(hash(password)), as you can see right there, also compares the hash in a way that isn&#x27;t constant time. And there&#x27;s no limit on wrong password attempts, so obviously that&#x27;s a huge hole.</p>
+        <p><span class="ts">[10:13]</span> I&#x27;m going to line 181. So I actually noted this in my own comment back in CS 360: a real app should add a salt. Now I&#x27;m going to fix it.</p>
+        <p><span class="ts">[10:26]</span> We need to kind of come back in time here a little bit. So let&#x27;s go back to the AddWeightActivity tab here and look at problem five, which I saw in lines 132 and 143. So let&#x27;s go to line 132. So the problem here is the input checks. The only rule is that a weight must be above zero, so 5,000 pounds would be accepted. And on line 143, which I&#x27;ll show you here, 143. What was my train of thought here? Okay, on line 143, if the saving fails, which you can see, the code ignores it. The user would see &quot;saved&quot; even when nothing is saved.</p>
+        <p><span class="ts">[11:30]</span> Let&#x27;s go to the AndroidManifest tab here and look at problem number six. Problem number six is on line 18, where it says uses-permission, android:name, android.permission.SEND_SMS.</p>
+        <p><span class="ts">[11:53]</span> There is no real session. There&#x27;s no logout button and no timeout. The user ID is just passed from screen to screen, and every restart goes back to the login screen. Yes, and that is a real beta test issue I was having this morning before prepping this. Every time I would close it out to set it up, I had to type in the username, as you saw.</p>
+        <p><span class="ts">[12:21]</span> So problem seven, testing. The only test is a sample, a check that two plus two equals four. And none of these files has a header with my name, date, or version.</p>
+        <h4>Enhancements</h4>
+        <p><span class="ts">[12:41]</span> What I&#x27;ll do: let&#x27;s go to Preview here. Figure 1, this is my plan. So in Figure 1 here, the original CS 360 build has the Activity, UI plus validation plus logic, and then my DatabaseHelper, which is raw SQLite on the main thread, and then this branch here, SmsManager, which sends SMS.</p>
+        <p><span class="ts">[13:12]</span> In Figure 2, for passwords, the change I&#x27;m going to make here: for passwords, I&#x27;ll use PBKDF2 with a random salt for every user and 600,000 rounds, which is what OWASP recommends. So you can see that kind of here. Hashes get compared in constant time. Five wrong tries locks the account for 15 minutes, and existing users get upgraded automatically the next time they log in. So that&#x27;ll solve that login process.</p>
+        <p><span class="ts">[13:47]</span> So staying on here, I&#x27;ll add one InputValidator right here, off this branch right here: one class for all the rules, like weights between 15 and 1,000 pounds and no future dates. The date format becomes one constant, and failed saves will show an error.</p>
+        <p><span class="ts">[14:09]</span> I&#x27;ll replace text messages with normal phone notifications, remove the SMS permission and the stored phone number, and turn off backups. Finally, I&#x27;ll add real unit tests and a GitHub Actions setup that runs them on every push, plus a header on every file. All right, I know it&#x27;s like chicken scratch. Okay, then we&#x27;re going to switch back to Android Studio, so that&#x27;s my note.</p>
+        <p><span class="ts">[14:46]</span> So this shows skills in app architecture, security, and testing. It&#x27;s going to support Outcome 4, using industry-standard tools, and Outcome 5, the security mindset. I hope it also supports Outcome 1, because clean code and pull requests make teamwork easier, and Outcome 2, because the diagram explains what I&#x27;m trying to do more clearly to the viewer.</p>
+        <h4>Additional Category One findings</h4>
+        <p><span class="ts">[15:22]</span> Okay, I needed to make a note before I move forward. I&#x27;m in the AndroidManifest right here. Go to line 18. So before I move on, there are two things I wanted to add to Category One.</p>
+        <p><span class="ts">[15:42]</span> So first, the platform risk. Line 18 asks for permission to send a text message. Google Play generally only allows that for real texting apps, so this couldn&#x27;t be published as is. And then line 21 sets allowBackup to true, which lets backups copy the health data off the phone.</p>
+        <p><span class="ts">[16:07]</span> To be clear on the password finding: right now, passwords are hashed with SHA-256 with no salt. That&#x27;s the problem I&#x27;m fixing.</p>
+        <p><span class="ts">[16:17]</span> And then if we go back to Figure 1 right here, and on the right-hand side over here, you&#x27;ll see, second, my main design fix. I&#x27;ll rebuild the app using MVVM. Screens only display things. A ViewModel holds each screen&#x27;s data. One Repository talks to the database, on a background thread. That fixes the too-many-jobs and freezing problems, and it makes the code testable.</p>
+        <h3>Category Two: Algorithms and Data Structures</h3>
+        <h4>Existing functionality</h4>
+        <p><span class="ts">[16:58]</span> Okay, so I&#x27;m going to go into algorithms and data structures. So right now, if you look over here on the phone, you see the weights and the dates that are there. So in this category of algorithms and data structures, I&#x27;m looking at how the app sorts the weight history and does its math. Each row shows a date, a weight, and the change from the row below it.</p>
+        <p><span class="ts">[17:25]</span> And if we go to the DatabaseHelper tab again, right here on the left, go to line 242, where it says public List&lt;WeightEntry&gt; getAllWeights. So here&#x27;s how the list gets built. Line 248 sorts the rows by their ID number, newest first, and the loop on line 258 goes through the list once and works out each change. So I&#x27;ll show you that. I&#x27;m looking at 248. See, we&#x27;re just getting it right there. And then on line 258, you&#x27;ve got the entries right there.</p>
+        <p><span class="ts">[18:24]</span> So if we go back over to WeightGridActivity, we&#x27;re still on line 110. Every time this screen opens, it clears the list, reloads everything, and redraws every row. If we go to line 153, you&#x27;ll see right here, line 153 treats the first row as the latest weight and compares it to the goal.</p>
+        <h4>Code analysis</h4>
+        <p><span class="ts">[18:56]</span> So what I found: when you look at the phone over here, October 10th, so let&#x27;s take it right here, showing the 219-pound weigh-in, then +13.8, and 219 on the card. This is the main bug. Sorting by ID means sorting by when I typed in the entry, not by its date. I added October 10th last, so it goes up here on top as my latest weight. It says plus 13.8 pounds. That is wrong. The real change was a loss of a pound. The goal card says I have 14 pounds to go. I&#x27;m really only 0.2 pounds away.</p>
+        <p><span class="ts">[19:47]</span> The DatabaseHelper tab: if we go to line 273, which we&#x27;re getting close to, getLatestWeight has the same problem, so BMI uses the wrong weight too. Part of the cause is the dates are saved as text, like November 5th, 2026, over here. Text like that doesn&#x27;t sort right. April comes before January alphabetically, so the database can&#x27;t sort or filter efficiently.</p>
+        <p><span class="ts">[20:22]</span> Building a list is fine on its own, but it happens every single time the screen opens, and every single row is redrawn, even if only one has changed.</p>
+        <p><span class="ts">[20:33]</span> So let&#x27;s go to a line in the same tab. I&#x27;ll show you line 342. Okay, right here. The repeated code: the measurements list copies the same loop. So it goes through getAllMeasurements. A bug would have to be fixed in two places, because it&#x27;s also on line 359. You can tell right there.</p>
+        <p><span class="ts">[21:05]</span> And then we can go back to line 282. This method right here loads every row, just to answer yes or no: does the user have any weights? Stopping at the first row would be much faster.</p>
+        <p><span class="ts">[21:25]</span> And then if we go to HealthMetrics, here. Back into it, so I have the HealthMetrics tab opened up. I&#x27;m going to go to line 14, right here, where it says if heightInches is less than or equal to zero. So some things are done right. The checklist asks if we check for dividing by zero, and BMI does that here. The goal check also doesn&#x27;t compare decimal numbers for exact equality, which my checklist warns about.</p>
+        <p><span class="ts">[22:11]</span> The last gap: the app shows old weights, but never looks at the trend, and it can&#x27;t tell you when you&#x27;ll reach your goal.</p>
+        <h4>Enhancements</h4>
+        <p><span class="ts">[22:22]</span> What I&#x27;m going to do: so if we go back to the figures here, and we go to Figure 3. So my plan is a new TrendAnalyzer class, in plain Java, so I can test it.</p>
+        <p><span class="ts">[22:40]</span> First, I&#x27;ll store the entries in a TreeMap by the real date, to make sure the date exists. A TreeMap is a red-black tree, a kind of self-balancing tree. Adding, finding, and deleting are O of log n, and the entries always come out in date order. That fixes the sorting bug, the wrong changes, and the wrong latest weight.</p>
+        <p><span class="ts">[23:14]</span> Second, the 7-, 30-, and 90-day views use subMap, which is O of log n plus k, instead of scanning everything.</p>
+        <p><span class="ts">[23:38]</span> Third, a seven-day moving average with a sliding window: add the new day, drop the oldest. That&#x27;s O of n instead of O of n times the window size.</p>
+        <p><span class="ts">[24:01]</span> And then fourth, a trend line that uses least-squares regression in one pass to predict the date I&#x27;ll reach my goal. That&#x27;s what I learned in MAT 243 and MAT 350.</p>
+        <p><span class="ts">[24:13]</span> Fifth, outlier checks. If a new weight is way off from my recent average, the app asks if it&#x27;s a typo. And then sixth, the list will only redraw the rows that changed.</p>
+        <p><span class="ts">[24:34]</span> Take it back to Android Studio. The trade-off: a TreeMap uses more memory than a simple list, but one entry a day is only about 355 a year, so we should be fine. I&#x27;ll test the speed with 1,000, 10,000, and 100,000 sample entries and share the results.</p>
+        <p><span class="ts">[24:57]</span> This skill, I&#x27;m hoping, shows in picking data structures, Big O analysis, and testing performance. It mainly supports Outcome 3, designing solutions with algorithms and managing trade-offs. It also supports Outcome 4 for the tools, Outcome 2 for explaining it clearly, and Outcome 5, since the typo checks protect the data.</p>
+        <h3>Category Three: Databases</h3>
+        <h4>Existing functionality</h4>
+        <p><span class="ts">[25:25]</span> So I&#x27;m going to go into databases right now. So I&#x27;m in the DatabaseHelper tab. I&#x27;m going to go down to line 26. I&#x27;m going to be looking at line 26 and then line 29. They&#x27;re both on the screen here. Category Three is databases. All the app&#x27;s data goes through this one class, DatabaseHelper, and it&#x27;s on database version 1.</p>
+        <p><span class="ts">[25:55]</span> Then we&#x27;ll go to line 78, and from here, we&#x27;re going to scroll down through to line 121. And what you&#x27;re going to notice is that onCreate makes five tables: users, weights, goals, measurements, and profile. Each table links back to the user with a user ID. So I&#x27;m going to scroll through until we get to line 121.</p>
+        <p><span class="ts">[26:44]</span> I want to take this to line 207. Okay, so right here, you see each table has methods to add, read, update, and delete its data.</p>
+        <h4>Code analysis</h4>
+        <p><span class="ts">[26:59]</span> So what I found. First, the good: the data is split into sensible tables, usernames have to be unique, and the required fields can&#x27;t be empty.</p>
+        <p><span class="ts">[27:11]</span> We look at line 124. The biggest problem you&#x27;re going to see right here is that when the database version goes up, the code deletes every table. On the first update, the app would wipe out every user&#x27;s history. There&#x27;s no safe way to upgrade.</p>
+        <p><span class="ts">[27:35]</span> We go to line 89. The tables say they link to users, but SQLite ignores those links unless you turn them on, and the code never does. So nothing actually enforces them.</p>
+        <p><span class="ts">[27:52]</span> If we go back up to line 242, right here, every query looks things up by user ID, but there&#x27;s no index, so every lookup scans the whole table. And there are no limits on values either. The database would accept a negative weight or a million pounds, as we discussed earlier.</p>
+        <p><span class="ts">[28:19]</span> If I go to line 391, and then we&#x27;ll look at line 414: defensive programming. If a saved value is bad, line 391 crashes, and then line 414, which closes the cursor, never runs, and that leaks resources. So I&#x27;ll show you line 414. You can see it. So let me repeat that: line 414, which closes the cursor, never runs, and that leaks the resources.</p>
+        <p><span class="ts">[29:06]</span> And then if we go to line 477, this method does two separate writes without a transaction. If one fails, the data could end up half-baked.</p>
+        <p><span class="ts">[29:24]</span> And then on line 118, privacy. The database isn&#x27;t encrypted. It holds health data, birth dates, and phone numbers. Users can&#x27;t export their data or delete their account.</p>
+        <h4>Enhancements</h4>
+        <p><span class="ts">[29:44]</span> Okay, so what I&#x27;ll do: go back to the figures here, and go to Figure 4. So you see we&#x27;ve got app launch, then the key from the Android Keystore, and Room opens the SQLCipher database, and then the version check, with the current version down here and the original. So I&#x27;ll walk you through this right here.</p>
+        <p><span class="ts">[30:08]</span> My plan is to move the database to Android&#x27;s Room library, because Room checks my queries when the app builds, so mistakes get caught early. I&#x27;ll redesign the tables. Dates will be saved as year-month-day, so they sort correctly. Links between tables will actually be enforced, and deleting a user deletes their data. Weights must be between 50 and 1,000 pounds, with one entry per day.</p>
+        <p><span class="ts">[30:41]</span> Instead of deleting everything on an update, I&#x27;ll write a real migration from version 1 to version 2. It runs as one transaction. If anything fails, it undoes everything, and the old data stays safe. I&#x27;ll test it with Room&#x27;s migration testing tools.</p>
+        <p><span class="ts">[30:58]</span> And I&#x27;ll add an index on user ID and date, and then I&#x27;ll show the query plan before and after to prove it&#x27;s faster. I&#x27;ll add weekly and monthly reports using SQL, encrypt the database with SQLCipher using a key protected by Android&#x27;s Keystore, and let users export their data and delete their own accounts.</p>
+        <p><span class="ts">[31:24]</span> Now, if we go back to here: if I have time, I&#x27;d like to add cloud backup with Node, Express, and MongoDB, like I used in CS 465.</p>
+        <p><span class="ts">[31:38]</span> This shows skills in database design, migrations, indexing, and encryption. It mainly supports Outcome 4 and Outcome 5. It also supports Outcome 3 for the design trade-offs, and Outcome 1, because users can share their reports with the people who help them.</p>
+        <h3>Closing</h3>
+        <p><span class="ts">[32:09]</span> I&#x27;m showing you here again the code in Android Studio and the phone. The app works, but this review found real, fundamental problems in all three areas. The design mixes too much together, and passwords aren&#x27;t stored safely. The history is sorted wrong, so the changes and the latest weight are wrong. And the database would erase everything on its first update.</p>
+        <p><span class="ts">[32:34]</span> My plan fixes all of that with a cleaner design, better algorithms, and a safer database, and it covers all five course outcomes. The finished work will be in my ePortfolio at kyledauk.github.io. Thank you for watching.</p>
+    </details>
+
+    <p style="margin-top:28px"><a href="./">&larr; Back to the ePortfolio home page</a></p>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 Kyle Dauk &middot; CS 499 Computer Science Capstone, Southern New Hampshire University</div>
+  </footer>
+</body>
+</html>
