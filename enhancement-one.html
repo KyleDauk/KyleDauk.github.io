@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enhancement One: Software Design and Engineering | Kyle Dauk ePortfolio</title>
+  <meta name="description" content="Enhancement One of the CS 360 Weight Tracking Android app: MVVM architecture, secure PBKDF2 authentication, session management, validation, privacy, and automated testing.">
+  <style>
+    :root {
+      --bg: #ffffff; --surface: #f4f8f7; --text: #1b1f23; --muted: #57606a;
+      --accent: #00796b; --accent-dark: #005a4f; --border: #d0d7de;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+           background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent-dark); }
+    a:focus-visible, summary:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+    .skip { position: absolute; left: -999px; top: 0; background: #fff; padding: 8px 12px; }
+    .skip:focus { left: 8px; }
+    header { background: var(--accent); color: #fff; }
+    nav { max-width: 1040px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center;
+          gap: 4px 20px; padding: 14px 20px; }
+    nav .brand { font-weight: 700; font-size: 1.1rem; margin-right: auto; color: #fff; text-decoration: none; }
+    nav a { color: #e6f4f1; text-decoration: none; font-size: .95rem; }
+    nav a:hover { color: #fff; text-decoration: underline; }
+    main { max-width: 1040px; margin: 0 auto; padding: 40px 20px 48px; }
+    h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0 0 8px; line-height: 1.2; }
+    .lead { font-size: 1.1rem; color: var(--muted); max-width: 760px; margin: 0 0 24px; }
+    h2 { font-size: 1.35rem; margin: 36px 0 12px; border-bottom: 2px solid var(--surface); padding-bottom: 6px; }
+    .video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden; }
+    .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .meta { color: var(--muted); font-size: .92rem; margin: 10px 0 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; background: #fff; }
+    .card h3 { margin: 0 0 6px; font-size: 1.02rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .94rem; }
+    ol.chapters { padding-left: 0; list-style: none; columns: 2 320px; column-gap: 28px; margin: 0; }
+    ol.chapters li { margin: 0 0 6px; break-inside: avoid; }
+    .ts { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--accent-dark); }
+    details { border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; background: var(--surface); }
+    summary { cursor: pointer; font-weight: 600; }
+    details h3 { margin: 22px 0 4px; font-size: 1.1rem; }
+    details h4 { margin: 14px 0 4px; font-size: .98rem; color: var(--muted); }
+    details p { margin: 0 0 10px; max-width: 820px; }
+    footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .88rem; }
+    footer div { max-width: 1040px; margin: 0 auto; padding: 18px 20px; }
+  
+    .lead a { color: var(--accent-dark); }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 8px; }
+    .btn { display: inline-block; border: 1px solid var(--accent); color: var(--accent-dark); border-radius: 8px;
+           padding: 8px 14px; text-decoration: none; font-weight: 600; font-size: .95rem; }
+    .btn:hover { background: var(--surface); }
+    .narrative p { max-width: 820px; }
+    .narrative h3 { font-size: 1.15rem; margin: 28px 0 8px; }
+    .caption { margin-top: 24px; }
+    .table-wrap { overflow-x: auto; margin: 8px 0 20px; }
+    table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+    th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: var(--surface); }
+    p.ref { padding-left: 2em; text-indent: -2em; font-size: .94rem; word-break: break-word; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to main content</a>
+  <header>
+    <nav aria-label="Primary">
+      <a class="brand" href="./">Kyle Dauk</a>
+      <a href="./#self-assessment">Self-Assessment</a>
+      <a href="code-review.html">Code Review</a>
+      <a href="./#enhancements" aria-current="page">Enhancements</a>
+      <a href="https://github.com/KyleDauk">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="content">
+    <h1>Enhancement One: Software Design and Engineering</h1>
+    <p class="lead">Version 2.0 of the Weight Tracking Android app I built in CS 360: Mobile Architecture and Programming. It re-architects the app around MVVM with a repository layer, replaces unsalted password hashing with PBKDF2, adds sessions, centralized validation, and privacy fixes, and is covered by 87 automated tests that run on every push.</p>
+
+    <div class="links">
+      <a class="btn" href="https://github.com/KyleDauk/weight-tracking-android-app/tree/v2.0">Browse the enhanced code (v2.0)</a>
+      <a class="btn" href="https://github.com/KyleDauk/weight-tracking-android-app/compare/v1.0...v2.0">Compare with the original (v1.0 to v2.0)</a>
+      <a class="btn" href="https://github.com/KyleDauk/weight-tracking-android-app/tree/v1.0">Original CS 360 code (v1.0)</a>
+    </div>
+
+    <h2>At a glance</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Architecture</h3>
+        <p>MVVM: Activities display data, ViewModels hold screen state, and one repository does all database work on a background thread.</p>
+      </article>
+      <article class="card">
+        <h3>Security</h3>
+        <p>Salted PBKDF2 with 600,000 iterations, account lockout, a 15-minute session timeout, and no SMS permission or stored phone numbers.</p>
+      </article>
+      <article class="card">
+        <h3>Quality</h3>
+        <p>87 JUnit and Robolectric tests, Android Lint with zero errors, and a GitHub Actions workflow that runs them on every push.</p>
+      </article>
+    </div>
+
+    <h2 id="narrative">Narrative</h2>
+    <div class="narrative">
+<h3>Artifact Description</h3>
+<p>The artifact is Weight Tracking, an Android application written in Java that I built as the final project for CS 360: Mobile Architecture and Programming during the 2026 C-4 term (June to August 2026). Users create an account, log their body weight by date, set a goal weight, and record waist, hip, and height measurements from which the app calculates body mass index (BMI) and waist-to-hip ratio. Version 1.0 stored all data in a local SQLite database, displayed the weight history in a RecyclerView grid with a change column and a goal summary, and sent a text message through SmsManager when a saved weight reached the goal.</p>
+<p>For Enhancement One, I re-architected the application and hardened its security, following the plan approved in Module One and the findings from my Milestone One code review. Version 2.0 contains 37 production Java classes, 14 test files (11 test classes and 3 test helpers), a GitHub Actions workflow, and an architecture README. Across 66 files, the change adds about 5,800 lines and removes about 1,500. The <a href="https://github.com/KyleDauk/weight-tracking-android-app/tree/v1.0">v1.0 tag</a> of the repository holds the untouched CS 360 project, and the <a href="https://github.com/KyleDauk/weight-tracking-android-app/tree/v2.0">v2.0 tag</a> holds this enhancement.</p>
+<h3>Justification for Inclusion</h3>
+<p>I selected this artifact because it is a complete, working mobile application that still showed every weakness a professional code review is meant to find. Each screen worked in a demonstration, but every Activity mixed user interface code, input validation, business rules, and SQL, and every database call ran on the main thread. Passwords were stored as unsalted SHA-256 hashes and compared with String.equals. Users could make unlimited login attempts, sessions never expired, and the app held the restricted SEND_SMS permission and a stored phone number. Health data could leave the device through backups, and the database upgrade routine dropped every table. Correcting these problems required design decisions across the whole codebase rather than a single feature, which makes the artifact a strong showcase for my career goal of working as a remote mobile and full-stack software engineer.</p>
+<p><em><strong>Components That Showcase Software Engineering Skills</strong></em></p>
+<p><strong>Layered MVVM architecture.</strong> Each data screen now has a ViewModel that exposes LiveData, and the Activities only bind that state to views and forward taps. The ViewModels depend on a TrackerRepository interface rather than on SQLite. The production SqliteTrackerRepository runs every query on a single background thread and delivers results on the main thread. A small AppContainer wires the dependencies by constructor injection, and a ViewModelFactory passes them to each ViewModel. This structure follows Google's recommended separation between a UI layer and a data layer (Android Developers, n.d.-a), and it means the planned Room migration in Enhancement Three can replace the storage class without touching any screen.</p>
+<p><strong>Secure authentication.</strong> PasswordHasher derives keys with PBKDF2WithHmacSHA256, using a 16-byte salt from SecureRandom and 600,000 iterations, the current OWASP recommendation for that algorithm (OWASP Foundation, n.d.). It compares hashes in constant time with MessageDigest.isEqual. AuthService locks an account for 15 minutes after five failed attempts and returns the same message for an unknown username and a wrong password. It also performs one full hash in both cases, so a single login attempt reveals neither through its message nor through its response time whether a username exists. Repeated failures can still reveal it, because only a real account can be locked. I accepted that trade-off because the lockout is what stops password guessing. Existing version 1.0 accounts are not broken. Their SHA-256 hash is verified once at the next successful login and immediately replaced with a salted PBKDF2 hash.</p>
+<p><strong>Session management.</strong> SessionManager is now the single source of truth for the signed-in user, replacing the user id that version 1.0 copied through every Intent. A SecureActivity base class checks the session whenever a protected screen is created or resumed and at the start of every touch, so it returns the user to the login screen after 15 idle minutes even if the screen was left on. Every touch counts as activity. A new Log out menu item ends the session and clears the back stack, so pressing Back cannot reveal the previous user's data.</p>
+<p><strong>Defensive programming.</strong> InputValidator centralizes every rule: weights and goals between 50 and 1,000 pounds, plausible ranges for waist, hip, and height, no future dates, a username pattern, and a password policy. The rules are free of Android types so they can be unit tested. Database writes now report failure, so a failed save shows an error and keeps the form open instead of displaying a false "Weight saved" message. Update and delete statements match on both the row id and the signed-in user's id, so a wrong id can never change another user's data.</p>
+<p><strong>Privacy and least privilege.</strong> GoalNotifier replaces SMS with a local notification and requests the POST_NOTIFICATIONS runtime permission that Android 13 introduced (Android Developers, n.d.-c). SEND_SMS and the phone number field were removed, and the database upgrade erases phone numbers already stored. The notification is marked private, so a locked phone shows only a generic "Weight Tracking update" message. Backups are disabled, and the data extraction rules also exclude the database from device-to-device transfer, which allowBackup="false" alone does not prevent on Android 12 and later (Android Developers, n.d.-b).</p>
+<p><strong>Non-destructive database upgrade.</strong> Schema version 2 adds the salt, hash_version, failed_attempts, and locked_until columns with ALTER TABLE inside onUpgrade. SQLiteOpenHelper runs the upgrade in a transaction, so existing users, weights, goals, and measurements survive. Version 1.0 would have dropped all of them.</p>
+<p><strong>Automated testing and continuous integration.</strong> The project now has 87 automated tests. These include JUnit tests for the security and validation logic and for every ViewModel, run against an in-memory fake repository and a controllable clock. Robolectric tests build a real version 1 database and prove that the upgrade preserves its data. Robolectric UI-flow tests drive the screens with Espresso, including a test that saves a weight, reaches the goal, and confirms that a private notification was posted. A GitHub Actions workflow runs Android Lint, the build, and every test on each push and pull request. In the final run, all 87 tests passed and lint reported zero errors.</p>
+<p class="caption"><strong>Table 1.</strong> <em>Code review findings, the enhancement for each, and the test that verifies it</em></p>
+<div class="table-wrap"><table>
+<thead>
+<tr><th scope="col">Code review finding (version 1.0)</th><th scope="col">Enhancement (version 2.0)</th><th scope="col">Verified by</th></tr>
+</thead>
+<tbody>
+<tr><td>Unsalted SHA-256, compared with String.equals</td><td>PBKDF2-HMAC-SHA256, 16-byte salt, 600,000 iterations, constant-time compare</td><td>PasswordHasherTest, AuthServiceTest</td></tr>
+<tr><td>Unlimited login attempts</td><td>Five failures lock the account for 15 minutes</td><td>AuthServiceTest (lock, expiry, reset)</td></tr>
+<tr><td>No logout or session timeout</td><td>SessionManager, SecureActivity, Log out menu item</td><td>SessionManagerTest, AppFlowTest</td></tr>
+<tr><td>All SQL on the main thread</td><td>Repository on a background ExecutorService, results on the main thread</td><td>AppFlowTest (real PBKDF2 off the UI thread)</td></tr>
+<tr><td>Failed saves reported as success</td><td>Write results checked; error shown, form kept</td><td>WeightViewModelsTest, BodyViewModelsTest</td></tr>
+<tr><td>Accepted 0.1 lb, 99,999 lb, future dates</td><td>Shared InputValidator ranges and date rule</td><td>InputValidatorTest, AppFlowTest</td></tr>
+<tr><td>SEND_SMS permission and stored phone number</td><td>Private local notification; phone numbers erased</td><td>AppFlowTest, DatabaseMigrationTest</td></tr>
+<tr><td>allowBackup="true"</td><td>Backups and device transfer of app data disabled</td><td>Manifest and XML rules (reviewed)</td></tr>
+<tr><td>onUpgrade dropped every table</td><td>In-place ALTER TABLE migration to version 2</td><td>DatabaseMigrationTest</td></tr>
+</tbody>
+</table></div>
+<h3>Course Outcomes</h3>
+<p>In Module One, I planned for this enhancement to demonstrate Outcome 4, using well-founded techniques and tools, as its primary outcome, and Outcome 5, a security mindset, alongside it. Both were met. For Outcome 4, the MVVM architecture, the Repository pattern, constructor injection, background threading, Jetpack ViewModel and LiveData, automated tests at three levels, and continuous integration are industry-standard techniques applied to a real codebase without losing any feature. For Outcome 5, each security change in Table 1 closes a specific vulnerability identified in the code review, and each change is verified by a test rather than by inspection alone.</p>
+<p>The enhancement also advances two outcomes I had planned to address mainly in other parts of the ePortfolio. Version 2.0 supports Outcome 1, building collaborative environments: the CI workflow checks every pull request automatically, the README documents the architecture for other developers, and the file headers and comments explain why each design decision was made. For Outcome 2, professional communication, this narrative, the before-and-after table, and the README are written for both technical reviewers and potential employers.</p>
+<p>I have three updates to my outcome-coverage plan. First, I raised the minimum Android version from API 24 to API 26, because the platform's PBKDF2WithHmacSHA256 implementation is only available from API 26. The alternative was hand-writing a key derivation function, a form of custom cryptography that secure coding standards advise against, so the trade-off favored a vetted platform primitive at the cost of a small share of very old devices. Second, I added Robolectric, which was not in the plan. It lets the UI-flow and database-migration tests run on the JVM in CI without an emulator. Third, the authentication columns now arrive in schema version 2 through SQLiteOpenHelper, so the Room migration in Enhancement Three will become version 2 to version 3. Database encryption with SQLCipher remains in Enhancement Three, as planned. Outcome 3, algorithmic principles and trade-offs, is still covered mainly by Enhancement Two.</p>
+<h3>Reflection on the Enhancement Process</h3>
+<p>The most important lesson was that architecture is what makes software testable. In version 1.0, the goal-reached rule lived inside an Activity method that also set text colors, so the only way to check it was to run the app and look. Once the rule moved into a plain GoalSummary class and the ViewModels depended on an interface, the same logic could be checked in milliseconds with no device. The 87 tests exist because the design allowed them, and they repeatedly caught regressions while the refactor was in progress.</p>
+<p>The security work showed how much depends on details that a demonstration never reveals. Hashing a password is easy. A secure login also requires a unique salt, a deliberately slow algorithm, a constant-time comparison, a lockout that cannot be used to test guesses while it is active, equal timing for unknown and known usernames, and an upgrade path for users whose old hashes are already in the database. The legacy upgrade was the most instructive constraint. The plaintext password exists only at the moment the user types it, so the moment of a successful login is the only point where a weak hash can safely be replaced.</p>
+<p>The work also involved several technical challenges. The first was that 600,000 PBKDF2 iterations take on the order of a second on a phone, which would freeze the login screen on the main thread. Moving the work to a background executor, and disabling the buttons while it runs, solved that and made the threading model concrete rather than theoretical. The second challenge was platform behavior that did not match its name. allowBackup="false" does not stop device-to-device transfer on Android 12 and later, so the data extraction rules had to exclude the database explicitly. In the same way, SQLite on API 26 cannot drop a column, so the phone number column is emptied now and will be removed when Room rebuilds the table. The third challenge was testing asynchronous code. Espresso waits for the main thread but not for my background executor, so the UI tests poll for their expected result. The first run also failed three of 86 tests because Robolectric's default screen was too small for Espresso to tap the login buttons and because one test opened the wrong menu. Both were test setup problems rather than application defects, and the second run passed all 86 tests. A final review before submission found one more gap. If the screen was left on past the 15-minute limit, the next tap refreshed the timer instead of ending the session, because the session was only checked when a screen opened or resumed. I changed SessionManager so an expired session can no longer be refreshed, made SecureActivity check the session at the start of every touch, and added a test for that case, which brought the suite to 87 tests. I also made the login screen recover from a database error instead of leaving its buttons disabled. The lesson was that a timeout is only as strong as the places where it is checked.</p>
+<h3>References</h3>
+<p class="ref">Android Developers. (n.d.-a). <em>Guide to app architecture</em>. Google. <a href="https://developer.android.com/topic/architecture">https://developer.android.com/topic/architecture</a></p>
+<p class="ref">Android Developers. (n.d.-b). <em>Back up user data with Auto Backup</em>. Google. <a href="https://developer.android.com/identity/data/autobackup">https://developer.android.com/identity/data/autobackup</a></p>
+<p class="ref">Android Developers. (n.d.-c). <em>Notification runtime permission</em>. Google. <a href="https://developer.android.com/develop/ui/views/notifications/notification-permission">https://developer.android.com/develop/ui/views/notifications/notification-permission</a></p>
+<p class="ref">OWASP Foundation. (n.d.). <em>Password storage cheat sheet</em>. OWASP Cheat Sheet Series. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html</a></p>
+
+    </div>
+
+    <p style="margin-top:28px"><a href="./">&larr; Back to the ePortfolio home page</a></p>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 Kyle Dauk &middot; CS 499 Computer Science Capstone, Southern New Hampshire University</div>
+  </footer>
+</body>
+</html>
